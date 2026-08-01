@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "author": "mina_frhni",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-pi-pico-w",
+      "id": "PicoW",
+      "top": -99.25,
+      "left": -25.25,
+      "attrs": { "builder": "pico-sdk" }
+    },
+    {
+      "type": "wokwi-ili9341",
+      "id": "lcd",
+      "top": -141.7,
+      "left": 120.4,
+      "rotate": 270,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-membrane-keypad",
+      "id": "keypad",
+      "top": -146,
+      "left": -301.6,
+      "attrs": {
+        "keys": [ "1", "2", "3", "B", "4", "5", "6", "C", "7", "8", "9", "D", "<", "0", ">", "." ]
+      }
+    }
+  ],
+  "connections": [
+    [ "PicoW:GP0", "$serialMonitor:RX", "", [] ],
+    [ "PicoW:GP1", "$serialMonitor:TX", "", [] ],
+    [ "keypad:R1", "PicoW:GP1", "purple", [ "v28.8", "h172.8", "v-297.6" ] ],
+    [ "keypad:R2", "PicoW:GP2", "magenta", [ "v19.2", "h162.8", "v-268.8" ] ],
+    [ "keypad:R3", "PicoW:GP3", "limegreen", [ "v9.6", "h153.3", "v-249.6" ] ],
+    [ "keypad:R4", "PicoW:GP4", "yellow", [ "v-9.6", "h143.8", "v-220.8" ] ],
+    [ "keypad:C1", "PicoW:GP5", "cyan", [ "v-19.2", "h134.3", "v-201.6" ] ],
+    [ "keypad:C2", "PicoW:GP6", "green", [ "v-28.8", "h124.8", "v-172.8" ] ],
+    [ "keypad:C3", "PicoW:GP7", "#8f4814", [ "v-38.4", "h115.05", "v-153.6" ] ],
+    [ "keypad:C4", "PicoW:GP8", "blue", [ "v-48", "h105.3", "v-134.4" ] ],
+    [ "lcd:VCC", "PicoW:3V3", "red", [ "h19.2", "v-144", "h-317.11" ] ],
+    [ "lcd:LED", "PicoW:3V3", "red", [ "h19.2", "v-86.39", "h-317.11" ] ],
+    [ "lcd:MISO", "PicoW:GP12", "blue", [ "h19.2", "v172.81", "h-384" ] ],
+    [ "lcd:MOSI", "PicoW:GP11", "cyan", [ "h19.2", "v134.41", "h-384" ] ],
+    [ "lcd:SCK", "PicoW:GP10", "green", [ "h19.2", "v-105.59", "h-384" ] ],
+    [ "lcd:CS", "PicoW:GP17", "limegreen", [ "h19.2", "v86.4", "h-317.11" ] ],
+    [ "lcd:D/C", "PicoW:GP19", "yellow", [ "h19.2", "v115.2", "h-317.11" ] ],
+    [ "lcd:RST", "PicoW:GP18", "purple", [ "h19.2", "v86.4", "h-317.11" ] ],
+    [ "lcd:GND", "PicoW:GND.8", "black", [ "h19.2", "v-124.8", "h-317.11" ] ]
+  ],
+  "dependencies": {}
+}

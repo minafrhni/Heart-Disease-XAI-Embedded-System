@@ -211,7 +211,7 @@ pip install -r requirements.txt
 Run the Flask API:
 
 ```bash
-python local_server.py
+python app.py
 ```
 
 Update the API URL inside **hardware/main.py** and run the project in **Wokwi**.

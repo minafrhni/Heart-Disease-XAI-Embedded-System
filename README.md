@@ -1,269 +1,112 @@
-# Heart Disease XAI Embedded System
+# Explainable Machine Learning for 10-Year Coronary Heart Disease Risk Prediction
 
-An end-to-end **Explainable Artificial Intelligence (XAI)** system for predicting the **10-year risk of Coronary Heart Disease (CHD)** and deploying the prediction on an embedded platform using **Raspberry Pi Pico W**.
+An explainable machine learning system for predicting the 10-year risk of coronary heart disease (CHD) using the Framingham Heart Study dataset. The project combines ensemble learning, Bayesian hyperparameter optimization, LIME-based explanations, and a Raspberry Pi Pico W hardware simulation.
 
-This project was developed as part of my **M.Sc. thesis in Computer Engineering** and integrates **Machine Learning**, **Explainable AI**, **REST APIs**, and **Embedded Systems** into a single working prototype.
+## Project Overview
 
----
+The main objective of this project is to develop a machine learning system that estimates an individual's risk of developing coronary heart disease within the next 10 years.
 
-## Overview
+Multiple ensemble learning algorithms were evaluated using different feature-scaling and class-balancing techniques. To improve model reliability and prevent data leakage, preprocessing and model training were integrated into a pipeline. Bayesian optimization was then applied to tune model hyperparameters, with the F1-score of the positive (patient) class as the optimization objective.
 
-Traditional machine learning models can produce accurate predictions but often fail to explain how those predictions are made. In healthcare applications, interpretability is essential because clinicians need to understand the reasoning behind an AI model before trusting its recommendations.
-
-This project addresses this challenge by combining a machine learning model with **LIME (Local Interpretable Model-Agnostic Explanations)** to provide transparent predictions for coronary heart disease risk.
-
-The trained model is deployed as a **Flask REST API**, while a **Raspberry Pi Pico W** running **MicroPython** collects patient information, sends it to the API via Wi-Fi, and displays both the prediction and its explanation on an **ILI9341 TFT display**.
-
-The embedded hardware prototype was developed and simulated using **Wokwi**.
-
----
-
-## Project Demonstration
-
-A short demonstration of the complete system running in Wokwi.
-
-The video shows:
-
-- Connecting the Raspberry Pi Pico W to Wi-Fi
-- Entering patient information using the keypad
-- Sending data to the Flask REST API
-- Receiving the CHD prediction
-- Displaying the LIME explanation on the TFT display
-
-Watch the demonstration video here:
-
-https://github.com/minafrhni/Heart-Disease-XAI-Embedded-System/issues/1
-
----
+The selected model was integrated into a Flask API and connected to a simulated hardware interface. LIME was used to provide local explanations for individual predictions.
 
 ## Key Features
 
-- Predicts the **10-year risk of Coronary Heart Disease (CHD)**
-- Uses the **Framingham Heart Study Dataset**
-- Handles class imbalance using **SVMSMOTE**
-- Applies **StandardScaler** for feature normalization
-- Uses a **Gradient Boosting Classifier**
-- Optimizes hyperparameters with **Bayesian Optimization**
-- Maximizes the **F1-score of the positive (CHD) class**
-- Generates prediction explanations using **LIME**
-- Deploys the trained model through a **Flask REST API**
-- Demonstrates embedded AI deployment using **Raspberry Pi Pico W**
-- Supports keypad-based patient data entry
-- Displays color-coded feature importance on an **ILI9341 TFT display**
-
----
-
-## System Architecture
-
-```text
-                 Patient
-                    │
-                    ▼
-      Raspberry Pi Pico W (MicroPython)
-                    │
-               Wi-Fi Request
-                    │
-                    ▼
-            Flask REST API
-                    │
-                    ▼
-      Machine Learning Pipeline
-                    │
-                    ▼
-     StandardScaler → SVMSMOTE
-                    │
-                    ▼
-    Gradient Boosting Classifier
-                    │
-                    ▼
-        CHD Risk Prediction
-                    │
-                    ▼
-         LIME Explanation
-                    │
-                    ▼
-            JSON Response
-                    │
-                    ▼
-        ILI9341 TFT Display
-```
-
----
-
-## Machine Learning Pipeline
-
-The prediction model consists of the following stages:
-
-1. Missing value removal
-2. Feature scaling using **StandardScaler**
-3. Class balancing using **SVMSMOTE**
-4. Classification using **Gradient Boosting**
-5. Hyperparameter optimization using **Bayesian Optimization**
-6. Local explanation generation using **LIME**
-
-The optimization objective was to maximize the **F1-score of the positive (CHD) class**, providing a better balance between Precision and Recall for the minority class.
-
----
-
-## Explainable AI
-
-Unlike conventional prediction systems, this project also explains **why** a prediction was made.
-
-For every patient, the API returns:
-
-- Predicted probability of CHD
-- Most influential clinical features
-- Positive and negative feature contributions
-
-Example:
-
-```json
-{
-  "probability": 11.17,
-  "lime_features": [
-    {
-      "feature": "age <= 42",
-      "weight": -25.17
-    },
-    {
-      "feature": "glucose > 87",
-      "weight": 2.45
-    }
-  ]
-}
-```
-
-Positive weights indicate an increase in predicted risk, while negative weights indicate a reduction in predicted risk.
-
----
-
-## Embedded Hardware
-
-The embedded interface was implemented using **MicroPython** and simulated in **Wokwi**.
-
-### Hardware Components
-
-- Raspberry Pi Pico W
-- ILI9341 TFT Display
-- 4×4 Matrix Keypad
-
-### Embedded Workflow
-
-1. Collect patient information through the keypad.
-2. Send the collected data to the Flask API.
-3. Receive the predicted CHD probability.
-4. Receive the LIME explanation.
-5. Display the prediction and feature importance on the TFT display.
-
----
-
-## Project Structure
-
-```text
-Heart-Disease-XAI-Embedded-System
-│
-├── api
-│   ├── app.py
-│   ├── requirements.txt
-│   └── Framingham.csv
-│
-├── hardware
-│   ├── main.py
-│   ├── ili9341.py
-│   └── diagram.json
-│
-└── README.md
-```
-
----
+* **Data preprocessing:** Handling missing values, feature scaling, and class-imbalance techniques.
+* **Ensemble learning:** Evaluation and comparison of multiple ensemble classifiers.
+* **Data leakage prevention:** Using pipelines to ensure preprocessing is fitted only on training data.
+* **Bayesian optimization:** Hyperparameter tuning to improve model performance.
+* **Explainable AI:** Using LIME to identify features influencing individual predictions.
+* **Flask API:** Serving predictions and explanations through a REST API.
+* **Hardware simulation:** Displaying prediction results and explanations using a Raspberry Pi Pico W and a graphical display in Wokwi.
 
 ## Dataset
 
-**Framingham Heart Study Dataset**
+The project uses the Framingham Heart Study dataset, which contains demographic and medical risk factors associated with coronary heart disease.
 
-https://www.kaggle.com/datasets/aasheesh200/framingham-heart-study-dataset
+* **Target variable:** `TenYearCHD`
+* **Prediction task:** Binary classification
+* **Features:** Demographic and clinical risk factors, including age, smoking habits, blood pressure, cholesterol, glucose, and BMI.
 
----
+Records with missing values were removed, and the `education` feature was excluded during model development.
 
-## Wokwi Simulation
+## Methodology
 
-The complete embedded prototype can be viewed here:
+The project followed these main steps:
 
-https://wokwi.com/projects/440944365735993345
+1. **Data preparation:** Loading the dataset, handling missing values, and separating features from the target variable.
+2. **Preprocessing:** Evaluating different feature-scaling and class-balancing methods.
+3. **Model evaluation:** Training and comparing ten ensemble learning algorithms.
+4. **Pipeline implementation:** Integrating preprocessing, sampling, and model training to prevent data leakage.
+5. **Hyperparameter optimization:** Applying Bayesian optimization to maximize the positive-class F1-score.
+6. **Model explainability:** Using LIME to generate local explanations for predictions.
+7. **API development:** Deploying the selected model through a Flask REST API.
+8. **Hardware simulation:** Connecting the prediction service to a Raspberry Pi Pico W simulation with a graphical display.
 
----
+## Final Model and Results
 
-## Installation
+The final model was selected based on the F1-score of the positive (patient) class.
 
-Clone the repository:
+| Component                   | Selected Method                |
+| --------------------------- | ------------------------------ |
+| Classifier                  | GradientBoostingClassifier     |
+| Feature scaling             | StandardScaler                 |
+| Sampling method             | SVMSMOTE                       |
+| Hyperparameter optimization | Bayesian Optimization          |
+| Explainability              | LIME                           |
+| API framework               | Flask                          |
+| Hardware simulation         | Raspberry Pi Pico W with Wokwi |
 
-```bash
-git clone https://github.com/<your-username>/Heart-Disease-XAI-Embedded-System.git
-```
+### Test Set Performance
 
-Install the required packages:
+| Metric                     | Score |
+| -------------------------- | ----: |
+| Accuracy                   |  0.76 |
+| Precision (positive class) |  0.35 |
+| Recall (positive class)    |  0.58 |
+| F1-score (positive class)  |  0.44 |
 
-```bash
-cd api
-pip install -r requirements.txt
-```
+The results reflect a trade-off between identifying positive cases and limiting false-positive predictions. The model is intended as a risk-prediction and decision-support prototype, not as a replacement for professional medical assessment.
 
-Run the Flask API:
+## Hardware Simulation
 
-```bash
-python app.py
-```
+The selected model's predictions and LIME explanations are presented through a simulated hardware interface built with a Raspberry Pi Pico W and a graphical display.
 
-Update the API URL inside **hardware/main.py** and run the project in **Wokwi**.
-
----
+**Wokwi Simulation:**
+[Open the project in Wokwi](https://wokwi.com/projects/440944365735993345)
 
 ## Technologies
 
-- Python
-- Flask
-- Scikit-learn
-- Pandas
-- NumPy
-- Imbalanced-learn
-- Bayesian Optimization
-- LIME
-- MicroPython
-- Raspberry Pi Pico W
-- Wokwi
-- REST API
+* Python
+* pandas
+* NumPy
+* scikit-learn
+* imbalanced-learn
+* Bayesian optimization
+* LIME
+* Flask
+* REST API
+* Postman
+* Raspberry Pi Pico W
+* Wokwi
 
----
+## Repository Contents
 
-## Future Work
+The repository contains the final implementation files, model-related code, and resources required to understand and reproduce the project. Refer to the source files for implementation details and execution instructions.
 
-- Integrate SHAP alongside LIME
-- Deploy the system on physical Raspberry Pi Pico W hardware
-- Replace LocalTunnel with a cloud deployment solution
-- Improve the embedded graphical interface
-- Add patient history management
-- Evaluate additional ensemble learning algorithms
+## Limitations and Future Work
 
----
+* Evaluating the model on larger and more diverse clinical datasets.
+* Conducting external validation using real-world patient data.
+* Comparing LIME with other explainability methods, such as SHAP.
+* Evaluating the usability and reliability of the system in clinical settings.
+* Extending the hardware prototype to support real-time data acquisition.
 
 ## Disclaimer
 
-This project was developed for **research and educational purposes only**.
-
-It is **not** a certified medical diagnostic system and should **not** be used as a substitute for professional medical judgment.
-
----
+This project is an academic research prototype. Its predictions are not medical diagnoses and should not be used as the sole basis for clinical decisions.
 
 ## Author
 
-**Mina F. Farahani**
-
-M.Sc. in Computer Engineering
-
-### Research Interests
-
-- Explainable Artificial Intelligence (XAI)
-- Machine Learning
-- Healthcare AI
-- Embedded Systems
-- Internet of Things (IoT)
+**Mina Farahani**
+M.Sc. in Computer Engineering — Computer Architecture

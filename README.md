@@ -105,6 +105,7 @@ This project is an academic research prototype. Its predictions are not medical 
 ## Author
 
 **Mina Farahani**
+
 M.Sc. in Computer Engineering — Computer Architecture
 
 **Academic Supervisor:** Dr. Somayyeh Jafarali Jassbi

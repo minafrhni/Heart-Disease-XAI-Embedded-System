@@ -90,10 +90,6 @@ The selected model's predictions and LIME explanations are presented through a s
 * Raspberry Pi Pico W
 * Wokwi
 
-## Repository Contents
-
-The repository contains the final implementation files, model-related code, and resources required to understand and reproduce the project. Refer to the source files for implementation details and execution instructions.
-
 ## Limitations and Future Work
 
 * Evaluating the model on larger and more diverse clinical datasets.
@@ -110,3 +106,5 @@ This project is an academic research prototype. Its predictions are not medical 
 
 **Mina Farahani**
 M.Sc. in Computer Engineering — Computer Architecture
+**Academic Supervisor:** Dr. Somayyeh Jafarali Jassbi
+**Academic Advisor:** Dr. Mojtaba Hosseini

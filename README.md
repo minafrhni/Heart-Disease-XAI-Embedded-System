@@ -106,5 +106,7 @@ This project is an academic research prototype. Its predictions are not medical 
 
 **Mina Farahani**
 M.Sc. in Computer Engineering — Computer Architecture
+
 **Academic Supervisor:** Dr. Somayyeh Jafarali Jassbi
+
 **Academic Advisor:** Dr. Mojtaba Hosseini
